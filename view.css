@@ -1,0 +1,148 @@
+/* Bright Elegant View Background */
+body {
+    /* Soft bright background, like ancient beige paper */
+    background: radial-gradient(circle at center, #fdfbf7 0%, #f4eee1 100%);
+    color: #332d20;
+}
+
+body::before {
+    /* Subtle texture or radial light effect */
+    background-image: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+}
+
+/* Elegant Node Cards - Bright Theme */
+.node-card {
+    background: rgba(255, 255, 255, 0.9); /* White translucent */
+    border: 1px solid rgba(212, 175, 55, 0.6); /* Gold/Bronze border */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Soft shadow */
+    color: #332d20;
+    /* Disable resizing in view mode */
+    resize: none;
+    overflow: visible;
+}
+
+.node-card:hover {
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
+    border-color: #d4af37;
+}
+
+/* Typography Overrides for Bright Theme */
+.node-name {
+    color: #8c2626; /* Deep traditional red for names */
+    text-shadow: none; /* Removed heavy text shadow */
+    font-weight: bold;
+}
+
+.node-generation {
+    color: #7a6a4d;
+}
+
+.node-title {
+    color: #5c4f36;
+}
+
+.node-spouse {
+    border-top: 1px dashed rgba(212, 175, 55, 0.4);
+}
+
+.node-spouse .node-name {
+    color: #a84b4b; /* Slightly lighter red for spouse */
+}
+
+/* SVG Line Style Overrides */
+#svgCanvas path {
+    stroke: rgba(140, 38, 38, 0.4); /* Deep red/brown lines */
+}
+
+/* Hide Management Features */
+.action-group, .add-btn, .toolbar {
+    display: none !important;
+}
+
+/* Controls Container */
+.view-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Edit Mode Button */
+.edit-mode-btn {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.edit-mode-btn:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Export PDF Button */
+.btn-export {
+    background: rgba(212, 175, 55, 0.9);
+    color: #111;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-export:hover {
+    background: #d4af37;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+}
+
+.select-format {
+    background: #fff !important;
+    color: #333 !important;
+    border: 1px solid #ccc !important;
+}
+
+/* Fix for html2canvas rendering */
+.pdf-exporting body {
+    overflow: visible !important;
+    background: #f4eee1 !important; /* Match bright bg */
+}
+.pdf-exporting .tree-wrapper {
+    overflow: visible !important;
+    width: max-content !important;
+    height: max-content !important;
+    position: static !important;
+}
+.pdf-exporting .node-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: #ffffff !important; 
+    border: 1px solid #d4af37 !important;
+    box-shadow: none !important;
+}
+.pdf-exporting .node-card * {
+    text-shadow: none !important;
+    color: #8c2626 !important; /* Deep red for names in PDF */
+    font-family: Arial, sans-serif !important; 
+}
+.pdf-exporting #svgCanvas path {
+    stroke: #8c2626 !important;
+}
