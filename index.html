@@ -1,61 +1,41 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gia Phả Họ Nguyễn</title>
-    
+    <title>Gia Phả Họ Nguyễn - Trang Trưng Bày</title>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap"
+        rel="stylesheet">
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- jsPDF & html2canvas -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="view.css">
 </head>
-<body>
 
-    <!-- Header / Tools -->
-    <div class="toolbar no-print">
-        <h1 class="logo">Gia Phả Dòng Họ Nguyễn</h1>
-        <div class="tools">
-            <div class="settings-group">
-                <label title="Kiểu chữ"><i class="fas fa-font"></i> 
-                    <select id="fontSelect" onchange="updateFontFamily(this.value)">
-                        <option value="'Playfair Display', serif">Playfair</option>
-                        <option value="'Inter', sans-serif">Inter</option>
-                        <option value="Arial, sans-serif">Arial</option>
-                        <option value="'Times New Roman', serif">Times</option>
-                    </select>
-                </label>
-                <label title="Cỡ chữ"><i class="fas fa-text-height"></i> <input type="range" id="fontSizeSlider" min="0.8" max="2" step="0.1" value="1.1" oninput="updateFontSize(this.value)"></label>
-                <label title="Khoảng cách ngang"><i class="fas fa-arrows-alt-h"></i> <input type="range" id="spacingSlider" min="5" max="100" value="10" oninput="updateSpacing(this.value)"></label>
-                <label title="Chiều rộng thẻ"><i class="fas fa-expand-arrows-alt"></i> <input type="range" id="widthSlider" min="100" max="300" value="140" oninput="updateWidth(this.value)"></label>
-                <button class="btn btn-danger" title="Khôi phục dữ liệu gốc" onclick="resetData()" style="padding: 5px 10px; font-size: 14px; margin-left: 10px;"><i class="fas fa-undo"></i> Reset Data</button>
-            </div>
-            <button class="btn btn-zoom-in" title="Phóng to" onclick="zoomIn()"><i class="fas fa-search-plus"></i></button>
-            <button class="btn btn-zoom-out" title="Thu nhỏ" onclick="zoomOut()"><i class="fas fa-search-minus"></i></button>
-            <button class="btn btn-reset" title="Mặc định" onclick="resetZoom()"><i class="fas fa-compress"></i></button>
-            <div class="export-group">
-                <select id="pdfFormat" class="select-format">
-                    <option value="a4">Khổ A4</option>
-                    <option value="a3">Khổ A3</option>
-                </select>
-                <button class="btn btn-primary" onclick="exportPDF()"><i class="fas fa-file-pdf"></i> Xuất PDF</button>
-                <a href="view.html" class="btn btn-success" style="text-decoration: none; background: #2e7d32; color: white;"><i class="fas fa-eye"></i> Xem Trang Trưng Bày</a>
-            </div>
-        </div>
-    </div>
+<body>
 
     <!-- Tree Container (Pan & Zoom) -->
     <div class="tree-wrapper" id="treeWrapper">
         <div class="tree" id="treeContainer">
+            <!-- Banner Cuốn Thư -->
+            <div class="hoanh-phi-container" id="hoanhPhiBanner">
+                <img src="img/cuon_thu_banner_1777775232466.png" class="hoanh-phi-bg" alt="Cuốn thư">
+                <div class="hoanh-phi-text">Họ Nguyễn</div>
+            </div>
+
             <svg id="svgCanvas"></svg>
             <div id="treeNodesContainer">
                 <!-- Family tree will be rendered here via JS -->
@@ -63,42 +43,43 @@
         </div>
     </div>
 
-    <!-- Edit/Add Modal -->
-    <div id="nodeModal" class="modal no-print">
-        <div class="modal-content glass-panel">
-            <div class="modal-header">
-                <h2 id="modalTitle">Chỉnh sửa thông tin</h2>
-                <span class="close" onclick="closeModal()">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form id="nodeForm">
-                    <input type="hidden" id="nodeId">
-                    <div class="form-group">
-                        <label for="nodeName">Họ và Tên</label>
-                        <input type="text" id="nodeName" placeholder="Nhập họ và tên..." required>
-                    </div>
-                    <div class="form-group">
-                        <label for="nodeTitle">Hiệu (nếu có)</label>
-                        <input type="text" id="nodeTitle" placeholder="Nhập hiệu...">
-                    </div>
-                    <div class="form-group">
-                        <label for="nodeSpouseName">Tên vợ/chồng (nếu có)</label>
-                        <input type="text" id="nodeSpouseName" placeholder="Nhập tên vợ/chồng...">
-                    </div>
-                    <div class="form-group">
-                        <label for="nodeSpouseTitle">Hiệu vợ/chồng (nếu có)</label>
-                        <input type="text" id="nodeSpouseTitle" placeholder="Nhập hiệu vợ/chồng...">
-                    </div>
-                    
-                    <div class="modal-actions" id="modalActions">
-                        <button type="button" class="btn btn-danger" id="btnDelete" onclick="deleteNode()">Xóa</button>
-                        <button type="submit" class="btn btn-success">Lưu lại</button>
-                    </div>
-                </form>
-            </div>
+    <!-- Controls -->
+    <div class="view-controls no-print" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+        <div class="control-group" title="Chỉnh cỡ chữ cây gia phả">
+            <i class="fas fa-sitemap"></i> Cây:
+            <input type="number" id="fontSizeInput" value="1.1" step="0.1" oninput="updateFontSize(this.value)">
         </div>
+
+        <div class="control-group" title="Chỉnh cỡ chữ Tên Hiệu">
+            <i class="fas fa-tag"></i> Hiệu:
+            <input type="number" id="titleFontInput" value="0.85" step="0.05" oninput="updateTitleFont(this.value)">
+        </div>
+
+        <div class="control-group" title="Chiều rộng & Chiều cao Hoành Phi">
+            <i class="fas fa-expand"></i> Khung:
+            <input type="number" id="hpWidth" value="800" step="10" oninput="updateHP('width', this.value)"> x
+            <input type="number" id="hpHeight" value="300" step="10" oninput="updateHP('height', this.value)">
+        </div>
+
+        <div class="control-group" title="Cỡ chữ Hoành Phi">
+            <i class="fas fa-font"></i> Chữ HP:
+            <input type="number" id="hpFont" value="52" step="1" oninput="updateHP('font', this.value)">
+        </div>
+
+        <select id="pdfFormat" class="select-format"
+            style="margin-right: 10px; background: rgba(30, 25, 15, 0.8); color: #d4af37; border: 1px solid #d4af37;">
+            <option value="a4">Khổ A4</option>
+            <option value="a3">Khổ A3</option>
+        </select>
+        <button class="btn-export" onclick="exportPDF()" title="Xuất file PDF để in">
+            <i class="fas fa-file-pdf"></i> Xuất PDF
+        </button>
+        <a href="admin.html" class="edit-mode-btn" title="Chuyển sang chế độ Quản lý / Chỉnh sửa">
+            <i class="fas fa-cog"></i> Cài đặt
+        </a>
     </div>
 
-    <script src="script.js"></script>
+    <script src="view.js"></script>
 </body>
+
 </html>
