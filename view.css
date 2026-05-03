@@ -21,18 +21,13 @@ body::before {
 /* Hoành Phi (Banner) Styles */
 .hoanh-phi-container {
     position: relative;
-    width: var(--hp-width, 600px);
-    height: var(--hp-height, 200px);
+    width: var(--hp-width, 800px);
+    height: var(--hp-height, 300px);
     margin: 0 auto 50px auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    border-radius: 5px;
-    overflow: hidden;
-    background: #4a0c0c;
-    /* Deep lacquer red fallback */
-    border: 3px solid #d4af37;
+    /* Removed rigid borders for Cuon Thu */
 }
 
 .hoanh-phi-bg {
@@ -41,7 +36,6 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
     z-index: 1;
 }
 
