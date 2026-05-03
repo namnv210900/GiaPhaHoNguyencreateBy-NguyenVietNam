@@ -176,7 +176,9 @@ body::before {
     box-shadow: var(--card-shadow);
     border-radius: 12px;
     padding: 15px;
-    width: var(--node-width);
+    min-width: var(--node-width);
+    width: max-content;
+    max-width: 400px;
     display: inline-block;
     position: relative;
     z-index: 2;
@@ -213,7 +215,7 @@ body::before {
 }
 
 .node-title {
-    font-size: 0.85rem;
+    font-size: var(--title-font-size, 0.85rem);
     font-style: italic;
     color: #666;
 }
@@ -225,7 +227,7 @@ body::before {
 }
 
 .node-spouse .node-name {
-    font-size: 1rem;
+    font-size: calc(var(--node-font-size) * 0.9);
     color: #5a4a2b;
 }
 

@@ -1,20 +1,72 @@
 /* Bright Elegant View Background */
 body {
-    /* Soft bright background, like ancient beige paper */
-    background: radial-gradient(circle at center, #fdfbf7 0%, #f4eee1 100%);
+    /* Soft bright background with elegant dragon/phoenix texture */
+    background: url('img/dragon_phoenix_bg_1777771237900.png') center/cover fixed, #fdfbf7;
     color: #332d20;
 }
 
 body::before {
-    /* Subtle texture or radial light effect */
-    background-image: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+    /* Subtle radial light effect over the background */
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.85) 100%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Hoành Phi (Banner) Styles */
+.hoanh-phi-container {
+    position: relative;
+    width: var(--hp-width, 600px);
+    height: var(--hp-height, 200px);
+    margin: 0 auto 50px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    overflow: hidden;
+    background: #4a0c0c;
+    /* Deep lacquer red fallback */
+    border: 3px solid #d4af37;
+}
+
+.hoanh-phi-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.hoanh-phi-text {
+    position: relative;
+    z-index: 2;
+    font-family: 'Playfair Display', serif;
+    font-size: var(--hp-font, 52px);
+    font-weight: 700;
+    color: #ffd700;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9), 0 0 15px rgba(212, 175, 55, 0.8);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 20px;
 }
 
 /* Elegant Node Cards - Bright Theme */
 .node-card {
-    background: rgba(255, 255, 255, 0.9); /* White translucent */
-    border: 1px solid rgba(212, 175, 55, 0.6); /* Gold/Bronze border */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Soft shadow */
+    background: rgba(255, 255, 255, 0.9);
+    /* White translucent */
+    border: 1px solid rgba(212, 175, 55, 0.6);
+    /* Gold/Bronze border */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    /* Soft shadow */
     color: #332d20;
     /* Disable resizing in view mode */
     resize: none;
@@ -28,8 +80,10 @@ body::before {
 
 /* Typography Overrides for Bright Theme */
 .node-name {
-    color: #8c2626; /* Deep traditional red for names */
-    text-shadow: none; /* Removed heavy text shadow */
+    color: #8c2626;
+    /* Deep traditional red for names */
+    text-shadow: none;
+    /* Removed heavy text shadow */
     font-weight: bold;
 }
 
@@ -46,16 +100,20 @@ body::before {
 }
 
 .node-spouse .node-name {
-    color: #a84b4b; /* Slightly lighter red for spouse */
+    color: #a84b4b;
+    /* Slightly lighter red for spouse */
 }
 
 /* SVG Line Style Overrides */
 #svgCanvas path {
-    stroke: rgba(140, 38, 38, 0.4); /* Deep red/brown lines */
+    stroke: rgba(140, 38, 38, 0.4);
+    /* Deep red/brown lines */
 }
 
 /* Hide Management Features */
-.action-group, .add-btn, .toolbar {
+.action-group,
+.add-btn,
+.toolbar {
     display: none !important;
 }
 
@@ -70,6 +128,39 @@ body::before {
     z-index: 1000;
 }
 
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(30, 25, 15, 0.85);
+    color: #d4af37;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #d4af37;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.control-group input {
+    background: rgba(0, 0, 0, 0.2);
+    color: #ffd700;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 4px;
+    outline: none;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+    padding: 2px 5px;
+    width: 55px;
+}
+
+.control-group input:focus {
+    border-color: #d4af37;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+
 /* Edit Mode Button */
 .edit-mode-btn {
     background: rgba(255, 255, 255, 0.9);
@@ -80,14 +171,14 @@ body::before {
     text-decoration: none;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
 
 .edit-mode-btn:hover {
     background: #f0f0f0;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Export PDF Button */
@@ -101,7 +192,7 @@ body::before {
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
@@ -123,26 +214,35 @@ body::before {
 /* Fix for html2canvas rendering */
 .pdf-exporting body {
     overflow: visible !important;
-    background: #f4eee1 !important; /* Match bright bg */
+    background: #f4eee1 !important;
 }
+
 .pdf-exporting .tree-wrapper {
     overflow: visible !important;
     width: max-content !important;
     height: max-content !important;
     position: static !important;
 }
+
+.pdf-exporting .tree {
+    background: #f4eee1 url('img/dragon_phoenix_bg_1777771237900.png') center/cover !important;
+}
+
 .pdf-exporting .node-card {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    background: #ffffff !important; 
+    background: #ffffff !important;
     border: 1px solid #d4af37 !important;
     box-shadow: none !important;
 }
+
 .pdf-exporting .node-card * {
     text-shadow: none !important;
-    color: #8c2626 !important; /* Deep red for names in PDF */
-    font-family: Arial, sans-serif !important; 
+    color: #8c2626 !important;
+    /* Deep red for names in PDF */
+    font-family: Arial, sans-serif !important;
 }
+
 .pdf-exporting #svgCanvas path {
     stroke: #8c2626 !important;
 }

@@ -186,6 +186,27 @@ window.addEventListener('resize', () => {
     drawLines();
 });
 
+// Settings Logic
+function updateFontSize(val) {
+    document.documentElement.style.setProperty('--node-font-size', val + 'rem');
+    setTimeout(() => drawLines(), 300);
+}
+
+function updateTitleFont(val) {
+    document.documentElement.style.setProperty('--title-font-size', val + 'rem');
+    setTimeout(() => drawLines(), 300);
+}
+
+function updateHP(type, val) {
+    if (type === 'width') {
+        document.documentElement.style.setProperty('--hp-width', val + 'px');
+    } else if (type === 'height') {
+        document.documentElement.style.setProperty('--hp-height', val + 'px');
+    } else if (type === 'font') {
+        document.documentElement.style.setProperty('--hp-font', val + 'px');
+    }
+}
+
 // PDF Export Logic
 function exportPDF() {
     const format = document.getElementById('pdfFormat').value;
@@ -203,7 +224,7 @@ function exportPDF() {
     // 2. Remove pan/zoom
     const oldTransform = element.style.transform;
     element.style.transform = 'none';
-    element.style.background = '#f4eee1';
+    // Removed explicit background so CSS background can apply
 
     // 3. Size SVG explicitly
     svg.style.width = currentWidth + 'px';
@@ -219,7 +240,7 @@ function exportPDF() {
         html2canvas(element, {
             scale: 2,
             useCORS: true,
-            backgroundColor: '#f4eee1',
+            backgroundColor: null, // Allow CSS background
             logging: false
         }).then(canvas => {
             const { jsPDF } = window.jspdf;
