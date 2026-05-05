@@ -4,27 +4,27 @@ const initialData = {
     name: "Nguyễn Đình Quế",
     title: "Phúc Lan",
     spouseName: "Phùng Thị Dùng",
-    spouseTitle: "Phúc Dung",
+    spouseTitle: "Phúc Dụng",
     children: [
         { id: "gen2-1", generation: 2, name: "Nguyễn Thị Ngọc" },
         {
-            id: "gen2-2", generation: 2, name: "Nguyễn Văn Nga", title: "Đức Nha", spouseName: "Tạ Thị Đấm", spouseTitle: "Diệu Tâm", children: [
-                { id: "gen3-1", generation: 3, name: "Nguyễn Thị Vệ" },
+            id: "gen2-2", generation: 2, name: "Nguyễn Văn Nga", title: "Đức Nha", spouseName: "Tạ Thị Đầm", spouseTitle: "Diệu Tâm", children: [
+                { id: "gen3-1", generation: 3, name: "Nguyễn Thị Vê" },
                 { id: "gen3-2", generation: 3, name: "Nguyễn Thị Va" },
-                { id: "gen3-3", generation: 3, name: "Nguyễn Văn Ngự", title: "Trực Bình" },
+                { id: "gen3-3", generation: 3, name: "Nguyễn Văn Ngư", title: "Trực Bình" },
                 {
-                    id: "gen3-4", generation: 3, name: "Nguyễn Văn Nhạn", title: "Phúc Toàn", spouseName: "Nguyễn Thị Hợi", spouseTitle: "Diệu Đa", children: [
+                    id: "gen3-4", generation: 3, name: "Nguyễn Văn Nhạn", title: "Phúc Toan", spouseName: "Nguyễn Thị Hợi", spouseTitle: "Diệu Đa", children: [
                         { id: "gen4-1", generation: 4, name: "Nguyễn Thị Nhẫn", title: "Từ Dẫn" },
                         { id: "gen4-2", generation: 4, name: "Nguyễn Thị Nhàn" },
                         {
                             id: "gen4-3", generation: 4, name: "Nguyễn Văn Nhãn", spouseName: "Phùng Thị Biên", spouseTitle: "Diệu Ban", children: [
-                                { id: "gen5-1", generation: 5, name: "Nguyễn Thị Hiển" },
+                                { id: "gen5-1", generation: 5, name: "Nguyễn Thị Hiền" },
                                 { id: "gen5-2", generation: 5, name: "Nguyễn Thị Duyên" },
                                 { id: "gen5-3", generation: 5, name: "Nguyễn Thị Hồng" },
                                 { id: "gen5-4", generation: 5, name: "Nguyễn Thị Thái" },
                                 { id: "gen5-5", generation: 5, name: "Nguyễn Văn Quý" },
                                 {
-                                    id: "gen5-6", generation: 5, name: "Nguyễn Việt Trì",  spouseName: "Phùng Thị Nở" ,children: [
+                                    id: "gen5-6", generation: 5, name: "Nguyễn Việt Trì", spouseName: "Phùng Thị Nở", children: [
                                         {
                                             id: "gen6-1", generation: 6, name: "Nguyễn Việt Hà", spouseName: "Đặng Thị Tư", children: [
                                                 { id: "gen7-1", generation: 7, name: "Nguyễn Đặng Chí Bảo" },
@@ -40,7 +40,7 @@ const initialData = {
                                         }
                                     ]
                                 },
-                               
+
                                 {
                                     id: "gen5-7", generation: 5, name: "Nguyễn Văn Dật", spouseName: "Nguyễn Thị Thức", children: [
                                         { id: "gen6-4", generation: 6, name: "Nguyễn Viết Nam" },
@@ -54,12 +54,13 @@ const initialData = {
                         { id: "gen4-4", generation: 4, name: "Nguyễn Văn Kiến" }
                     ]
                 },
-                { id: "gen3-5", generation: 3, name: "Nguyễn Văn Ngợi" }
+                { id: "gen3-5", generation: 3, name: "Nguyễn Văn Ngơi" }
             ]
         },
-        { id: "gen2-3", generation: 2, name: "Nguyễn Văn Lục", title: "Trực Chất" },
-        { id: "gen2-4", generation: 2, name: "Nguyễn Văn Lực", title: "Trực Cường" },
-        { id: "gen2-5", generation: 2, name: "Nguyễn Văn Nghiễm", title: "Trực Liêm" }
+        { id: "gen2-3", generation: 2, name: "Nguyễn Văn Nghiễm", title: "Trực Liễm" },
+        { id: "gen2-4", generation: 2, name: "Nguyễn Văn Lục", title: "Trực Chất" },
+        { id: "gen2-5", generation: 2, name: "Nguyễn Văn Lực", title: "Trực Cường" },
+
     ]
 };
 
@@ -67,23 +68,28 @@ let treeData = null;
 let currentAction = 'edit';
 let currentNodeId = null;
 
-const resizeObserver = new ResizeObserver(entries => {
+const styleObserver = new MutationObserver(mutations => {
     let changed = false;
-    for (let entry of entries) {
-        const id = entry.target.id;
-        const { node } = findNodeAndParent(treeData, id);
-        if (node) {
-            // Save new width and height
-            const w = entry.contentRect.width;
-            const h = entry.contentRect.height;
-            // padding and border are included in offsetWidth, so better use offsetWidth
-            node.width = entry.target.offsetWidth;
-            node.height = entry.target.offsetHeight;
-            changed = true;
+    mutations.forEach(mutation => {
+        if (mutation.attributeName === 'style') {
+            const card = mutation.target;
+            const { node } = findNodeAndParent(treeData, card.id);
+            if (node) {
+                if (card.style.width) {
+                    node.customWidth = card.style.width;
+                    changed = true;
+                }
+                if (card.style.height) {
+                    node.customHeight = card.style.height;
+                    changed = true;
+                }
+            }
         }
+    });
+    if (changed) {
+        saveData();
+        drawLines();
     }
-    drawLines();
-    // Do not save to localstorage on every micro resize tick to avoid lag, but this is fine for now
 });
 
 function init() {
@@ -146,11 +152,12 @@ function createNodeElement(node) {
         card.style.left = (node.dx || 0) + 'px';
         card.style.top = (node.dy || 0) + 'px';
     }
-    if (node.width) {
-        card.style.width = node.width + 'px';
+    // Ignore legacy node.width/node.height to fix auto-stretch bug
+    if (node.customWidth) {
+        card.style.width = node.customWidth;
     }
-    if (node.height) {
-        card.style.height = node.height + 'px';
+    if (node.customHeight) {
+        card.style.height = node.customHeight;
     }
 
     let html = `<div class="node-generation">Đời ${node.generation}</div>`;
@@ -180,8 +187,8 @@ function createNodeElement(node) {
     card.innerHTML = html;
     li.appendChild(card);
 
-    // Observe for resize
-    resizeObserver.observe(card);
+    // Observe for manual resize via style mutation
+    styleObserver.observe(card, { attributes: true, attributeFilter: ['style'] });
 
     if (node.children && node.children.length > 0) {
         const ul = document.createElement('ul');
@@ -542,27 +549,27 @@ function exportPDF() {
         }).then(canvas => {
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF('landscape', 'mm', format);
-            
+
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = pdf.internal.pageSize.getHeight();
-            
+
             const imgData = canvas.toDataURL('image/jpeg', 0.98);
-            
+
             const imgWidth = canvas.width;
             const imgHeight = canvas.height;
-            
+
             const padding = 5; // 5mm margin
             const availableWidth = pdfWidth - padding * 2;
             const availableHeight = pdfHeight - padding * 2;
-            
+
             const fitRatio = Math.min(availableWidth / imgWidth, availableHeight / imgHeight);
-            
+
             const finalWidth = imgWidth * fitRatio;
             const finalHeight = imgHeight * fitRatio;
-            
+
             const x = (pdfWidth - finalWidth) / 2;
             const y = (pdfHeight - finalHeight) / 2;
-            
+
             pdf.addImage(imgData, 'JPEG', x, y, finalWidth, finalHeight);
             pdf.save(`GiaPha_${format.toUpperCase()}.pdf`);
 

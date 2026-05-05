@@ -486,6 +486,5 @@ body::before {
 .pdf-exporting .node-card {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    background: #ffffff !important; /* Solid color instead of translucent blur */
-    border: 1px solid #000 !important;
+    background: rgba(255, 255, 255, 0.95) !important; /* Solid color instead of translucent blur */
 }

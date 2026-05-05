@@ -62,9 +62,8 @@ body::before {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     /* Soft shadow */
     color: #332d20;
-    /* Disable resizing in view mode */
-    resize: none;
-    overflow: visible;
+    overflow: hidden;
+    resize: both;
 }
 
 .node-card:hover {
@@ -100,7 +99,10 @@ body::before {
 
 /* SVG Line Style Overrides */
 #svgCanvas path {
-    stroke: rgba(140, 38, 38, 0.4);
+    stroke: rgba(140, 38, 38, 0.85);
+    /* Đậm hơn: tăng opacity từ 0.4 → 0.85 */
+    stroke-width: 3px;
+    /* To hơn: thêm độ dày đường nét */
     /* Deep red/brown lines */
 }
 
@@ -133,7 +135,7 @@ body::before {
     border: 1px solid #d4af37;
     font-size: 14px;
     font-weight: 600;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .control-group input {
@@ -225,18 +227,6 @@ body::before {
 .pdf-exporting .node-card {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    background: #ffffff !important;
-    border: 1px solid #d4af37 !important;
+    background: rgba(255, 255, 255, 0.95) !important;
     box-shadow: none !important;
-}
-
-.pdf-exporting .node-card * {
-    text-shadow: none !important;
-    color: #8c2626 !important;
-    /* Deep red for names in PDF */
-    font-family: Arial, sans-serif !important;
-}
-
-.pdf-exporting #svgCanvas path {
-    stroke: #8c2626 !important;
 }
