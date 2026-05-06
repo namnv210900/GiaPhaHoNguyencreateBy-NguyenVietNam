@@ -66,6 +66,7 @@ body::before {
     resize: both;
 }
 
+
 .node-card:hover {
     box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
     border-color: #d4af37;
@@ -97,20 +98,44 @@ body::before {
     /* Slightly lighter red for spouse */
 }
 
-/* SVG Line Style Overrides */
+/* SVG Line Style - controlled entirely by JS via inline style */
 #svgCanvas path {
-    stroke: rgba(140, 38, 38, 0.85);
-    /* Đậm hơn: tăng opacity từ 0.4 → 0.85 */
-    stroke-width: 3px;
-    /* To hơn: thêm độ dày đường nét */
-    /* Deep red/brown lines */
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
-/* Hide Management Features */
+/* Hide Management Features by default (show only in edit mode) */
 .action-group,
 .add-btn,
 .toolbar {
     display: none !important;
+}
+
+/* Show in edit mode (view-action-group / view-add-btn added by JS) */
+body.edit-mode-active .view-action-group {
+    display: flex !important;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+body.edit-mode-active .node-card:hover .view-action-group {
+    opacity: 1 !important;
+}
+
+body.edit-mode-active .view-add-btn {
+    display: flex !important;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+body.edit-mode-active .node-card:hover .view-add-btn {
+    opacity: 1 !important;
+}
+
+/* Glow indicator when edit mode is on */
+body.edit-mode-active .node-card {
+    outline: 1.5px dashed rgba(212, 175, 55, 0.5);
 }
 
 /* Controls Container */
@@ -156,6 +181,29 @@ body::before {
     background: rgba(0, 0, 0, 0.4);
 }
 
+
+/* Edit Mode Toggle Button */
+.btn-edit-toggle {
+    background: rgba(30, 25, 15, 0.85);
+    color: #d4af37;
+    padding: 10px 18px;
+    border: 1px solid #d4af37;
+    border-radius: 30px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-edit-toggle:hover {
+    background: rgba(212, 175, 55, 0.2);
+    transform: translateY(-2px);
+}
 
 /* Edit Mode Button */
 .edit-mode-btn {

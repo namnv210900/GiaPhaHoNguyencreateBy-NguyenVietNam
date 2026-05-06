@@ -239,9 +239,11 @@ function drawLines() {
 
                 const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
                 path.setAttribute('d', `M ${px} ${py} L ${px} ${midY} L ${cx} ${midY} L ${cx} ${cy}`);
-                path.setAttribute('stroke', 'var(--line-color)');
-                path.setAttribute('stroke-width', '2');
-                path.setAttribute('fill', 'none');
+                path.style.stroke = 'var(--line-color)';
+                path.style.strokeWidth = '2px';
+                path.style.fill = 'none';
+                path.style.strokeLinecap = 'round';
+                path.style.strokeLinejoin = 'round';
 
                 svg.appendChild(path);
             }
@@ -415,6 +417,9 @@ function deleteNode(id = currentNodeId) {
 }
 
 // Settings logic
+const BASE_FONT_SIZE = 1.1;   // rem
+const BASE_NODE_WIDTH = 140;  // px
+
 function updateSpacing(val) {
     document.documentElement.style.setProperty('--node-spacing', val + 'px');
     setTimeout(() => drawLines(), 300); // redraw lines after transition
@@ -426,9 +431,16 @@ function updateWidth(val) {
 }
 
 function updateFontSize(val) {
-    document.documentElement.style.setProperty('--node-font-size', val + 'rem');
+    const fontSize = parseFloat(val) || BASE_FONT_SIZE;
+    document.documentElement.style.setProperty('--node-font-size', fontSize + 'rem');
+
+    // Scale min-height (giãn dọc là chính, width cố định)
+    const newHeight = Math.round(80 * (fontSize / BASE_FONT_SIZE));
+    document.documentElement.style.setProperty('--node-min-height', Math.max(60, newHeight) + 'px');
+
     setTimeout(() => drawLines(), 300);
 }
+
 
 function updateFontFamily(val) {
     document.documentElement.style.setProperty('--node-font-family', val);

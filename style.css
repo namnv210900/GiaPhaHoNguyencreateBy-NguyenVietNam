@@ -9,10 +9,12 @@
     --line-color: #b89947;
     --line-width: 2px;
     --node-width: 140px;
+    --node-min-height: 80px;  /* tự scale theo font */
     --node-spacing: 10px;
     --node-font-size: 1.1rem;
     --node-font-family: 'Playfair Display', serif;
 }
+
 
 * {
     margin: 0;
@@ -176,17 +178,19 @@ body::before {
     box-shadow: var(--card-shadow);
     border-radius: 12px;
     padding: 15px;
+    width: var(--node-width);       /* cố định chiều ngang */
     min-width: var(--node-width);
-    width: max-content;
-    max-width: 400px;
+    min-height: var(--node-min-height);
+    height: auto;                   /* tự giãn dọc theo nội dung */
+    max-width: none;
     display: inline-block;
     position: relative;
     z-index: 2;
     transition: box-shadow 0.3s, border-color 0.3s;
     cursor: grab;
-    resize: both;
-    overflow: hidden;
 }
+
+
 
 .node-card:active {
     cursor: grabbing;

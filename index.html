@@ -27,7 +27,7 @@
 
 <body>
 
-    <!-- Tree Container (Pan & Zoom) -->
+    <!-- Tree Container (Pan & Zoom) -->    
     <div class="tree-wrapper" id="treeWrapper">
         <div class="tree" id="treeContainer">
             <!-- Banner Cuốn Thư -->
@@ -66,6 +66,26 @@
             <input type="number" id="hpFont" value="52" step="1" oninput="updateHP('font', this.value)">
         </div>
 
+        <div class="control-group" title="Độ dày nhánh kết nối">
+            <i class="fas fa-project-diagram"></i> Nhánh:
+            <input type="number" id="strokeWidthInput" value="3" step="0.5" min="0.5" max="15" oninput="updateStrokeWidth(this.value)">
+        </div>
+
+        <div class="control-group" title="Độ đậm nhánh kết nối (0.1 → 1.0)">
+            <i class="fas fa-bold"></i> Đậm:
+            <input type="number" id="strokeOpacityInput" value="0.85" step="0.05" min="0.05" max="1" oninput="updateStrokeOpacity(this.value)">
+        </div>
+
+        <div class="control-group" title="Chiều rộng tối thiểu của mỗi thẻ thành viên">
+            <i class="fas fa-arrows-alt-h"></i> Rộng thẻ:
+            <input type="number" id="nodeWidthInput" value="140" step="10" min="80" max="400" oninput="updateNodeWidth(this.value)">
+        </div>
+
+        <div class="control-group" title="Khoảng cách ngang giữa các thẻ">
+            <i class="fas fa-grip-lines-vertical"></i> Cách:
+            <input type="number" id="nodeSpacingInput" value="10" step="5" min="0" max="150" oninput="updateNodeSpacing(this.value)">
+        </div>
+
         <select id="pdfFormat" class="select-format"
             style="margin-right: 10px; background: rgba(30, 25, 15, 0.8); color: #d4af37; border: 1px solid #d4af37;">
             <option value="a4">Khổ A4</option>
@@ -74,9 +94,47 @@
         <button class="btn-export" onclick="exportPDF()" title="Xuất file PDF để in">
             <i class="fas fa-file-pdf"></i> Xuất PDF
         </button>
+        <button class="btn-edit-toggle no-print" id="editToggleBtn" onclick="toggleEditMode()" title="Bật/Tắt chế độ chỉnh sửa">
+            <i class="fas fa-edit"></i> <span id="editToggleText">Chỉnh sửa</span>
+        </button>
         <a href="admin.html" class="edit-mode-btn" title="Chuyển sang chế độ Quản lý / Chỉnh sửa">
             <i class="fas fa-cog"></i> Cài đặt
         </a>
+    </div>
+
+    <!-- Edit/Add Modal -->
+    <div id="nodeModal" class="modal no-print">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2 id="modalTitle">Chỉnh sửa thông tin</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="nodeForm">
+                    <input type="hidden" id="nodeId">
+                    <div class="form-group">
+                        <label for="nodeName">Họ và Tên</label>
+                        <input type="text" id="nodeName" placeholder="Nhập họ và tên..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nodeTitle">Hiệu (nếu có)</label>
+                        <input type="text" id="nodeTitle" placeholder="Nhập hiệu...">
+                    </div>
+                    <div class="form-group">
+                        <label for="nodeSpouseName">Tên vợ/chồng (nếu có)</label>
+                        <input type="text" id="nodeSpouseName" placeholder="Nhập tên vợ/chồng...">
+                    </div>
+                    <div class="form-group">
+                        <label for="nodeSpouseTitle">Hiệu vợ/chồng (nếu có)</label>
+                        <input type="text" id="nodeSpouseTitle" placeholder="Nhập hiệu vợ/chồng...">
+                    </div>
+                    <div class="modal-actions" id="modalActions">
+                        <button type="button" class="btn btn-danger" id="btnDelete" onclick="deleteNode()">Xóa</button>
+                        <button type="submit" class="btn btn-success">Lưu lại</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script src="view.js"></script>
